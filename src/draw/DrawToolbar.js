@@ -9,7 +9,8 @@ L.DrawToolbar = L.Toolbar.extend({
 		polygon: {},
 		rectangle: {},
 		circle: {},
-		marker: {}
+		marker: {},
+        textmarker: {},
 	},
 
 	initialize: function (options) {
@@ -55,8 +56,8 @@ L.DrawToolbar = L.Toolbar.extend({
 			},
 			{
 				enabled: this.options.marker,
-				handler: new L.Draw.TextMarker(map, this.options.marker),
-				title: L.drawLocal.draw.toolbar.buttons.marker
+				handler: new L.Draw.TextMarker(map, this.options.textmarker),
+				title: L.drawLocal.draw.toolbar.buttons.textmarker
 			}
 		];
 	},

@@ -28,7 +28,8 @@ L.drawLocal = {
 				polygon: 'Draw a polygon',
 				rectangle: 'Draw a rectangle',
 				circle: 'Draw a circle',
-				marker: 'Draw a marker'
+				marker: 'Draw a marker',
+                textmarker: 'Draw a text'
 			}
 		},
 		handlers: {
@@ -41,6 +42,11 @@ L.drawLocal = {
 			marker: {
 				tooltip: {
 					start: 'Click map to place marker.'
+				}
+			},
+			textmarker: {
+				tooltip: {
+					start: 'Click map to place text.'
 				}
 			},
 			polygon: {
@@ -1056,14 +1062,14 @@ L.Draw.TextMarker = L.Draw.Feature.extend({
 	},
 
 	options: {
-		//icon: new L.Icon.Default(),
+		icon: new L.Icon.Default(),
 		repeatMode: false,
 		zIndexOffset: 2000 // This should be > than the highest z-index any markers
 	},
 
 	initialize: function (map, options) {
 		// Save the type so super can fire, need to do this as cannot do this.TYPE :(
-		this.type = L.Draw.Marker.TYPE;
+		this.type = L.Draw.TextMarker.TYPE;
 
 		L.Draw.Feature.prototype.initialize.call(this, map, options);
 	},
@@ -1072,7 +1078,7 @@ L.Draw.TextMarker = L.Draw.Feature.extend({
 		L.Draw.Feature.prototype.addHooks.call(this);
 
 		if (this._map) {
-			this._tooltip.updateContent({ text: L.drawLocal.draw.handlers.marker.tooltip.start });
+			this._tooltip.updateContent({ text: L.drawLocal.draw.handlers.textmarker.tooltip.start });
 
 			// Same mouseMarker as in Draw.Polyline
 			if (!this._mouseMarker) {
@@ -1149,6 +1155,19 @@ L.Draw.TextMarker = L.Draw.Feature.extend({
 
 	_fireCreatedEvent: function () {
 		var marker = new L.Marker(this._marker.getLatLng(), { icon: this.options.icon });
+        marker.feature = {
+            properties : {
+                text: this.options.text,
+                color: '#000000'
+
+            }
+        };
+        /*
+        if (!marker.options) {
+            marker.options = {};
+        }
+        marker.options.color = '#000000';
+        */
 		L.Draw.Feature.prototype._fireCreatedEvent.call(this, marker);
 	}
 });
@@ -2497,7 +2516,8 @@ L.DrawToolbar = L.Toolbar.extend({
 		polygon: {},
 		rectangle: {},
 		circle: {},
-		marker: {}
+		marker: {},
+        textmarker: {},
 	},
 
 	initialize: function (options) {
@@ -2543,8 +2563,8 @@ L.DrawToolbar = L.Toolbar.extend({
 			},
 			{
 				enabled: this.options.marker,
-				handler: new L.Draw.TextMarker(map, this.options.marker),
-				title: L.drawLocal.draw.toolbar.buttons.marker
+				handler: new L.Draw.TextMarker(map, this.options.textmarker),
+				title: L.drawLocal.draw.toolbar.buttons.textmarker
 			}
 		];
 	},

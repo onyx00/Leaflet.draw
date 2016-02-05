@@ -170,6 +170,11 @@
 .leaflet-draw-toolbar .leaflet-draw-draw-marker {
 	background-position: -122px -2px;
 }
+.leaflet-draw-toolbar .leaflet-draw-draw-textmarker {
+	background-position: -272px -2px;
+}
+
+
 
 .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-marker {
 	background-position: -120px -1px;
