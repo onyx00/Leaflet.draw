@@ -1162,12 +1162,6 @@ L.Draw.TextMarker = L.Draw.Feature.extend({
 
             }
         };
-        /*
-        if (!marker.options) {
-            marker.options = {};
-        }
-        marker.options.color = '#000000';
-        */
 		L.Draw.Feature.prototype._fireCreatedEvent.call(this, marker);
 	}
 });
